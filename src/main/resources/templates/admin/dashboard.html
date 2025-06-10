@@ -1,0 +1,431 @@
+<!-- templates/admin/dashboard.html -->
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+      table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      th,
+      td {
+        padding: 10px;
+        border: 1px solid #ccc;
+        text-align: left;
+      }
+      .btn {
+        padding: 6px 12px;
+        margin-right: 4px;
+        text-decoration: none;
+        border: none;
+        color: white;
+        background-color: #007bff;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      .btn-danger {
+        background-color: #dc3545;
+      }
+      .btn-warning {
+        background-color: #ffc107;
+        color: black;
+      }
+      .btn-success {
+        background-color: #28a745;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="content" class="p-2">
+      <div class="sm:px-32 max-md:pt-40 md:pt-28 animate-fadeIn">
+        <h1 class="text-4xl px-4 mb-8 font-bold">Dashboard</h1>
+        <div class="flex flex-col">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <!-- Total Contacts Sent Card -->
+            <div
+              class="bg-white dark:bg-gray-800 rounded-2xl shadow px-6 py-10 flex flex-col items-center justify-center"
+            >
+              <h2
+                class="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-200"
+              >
+                Total Contacts
+              </h2>
+              <p
+                class="text-5xl font-extrabold text-green-600 dark:text-blue-300"
+                th:text="${totalContacts}"
+              >
+                0
+              </p>
+            </div>
+
+            <!-- Total Users Card -->
+            <div
+              class="bg-white dark:bg-gray-800 rounded-2xl shadow px-6 py-10 flex flex-col items-center justify-center"
+            >
+              <h2
+                class="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-200"
+              >
+                Total Feedbacks
+              </h2>
+              <p
+                class="text-5xl font-extrabold text-green-600 dark:text-green-300"
+                th:text="${totalFeedbacks}"
+              >
+                0
+              </p>
+            </div>
+            <div
+              class="bg-white dark:bg-gray-800 rounded-2xl shadow px-6 py-10 flex flex-col items-center justify-center"
+            >
+              <h2
+                class="text-xl font-semibold mb-2 text-gray-800 dark:text-gray-200"
+              >
+                Total Users
+              </h2>
+              <p
+                class="text-5xl font-extrabold text-green-600 dark:text-green-300"
+                th:text="${userCount}"
+              >
+                0
+              </p>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 mb-6 gap-4">
+            <!-- Total vs Favorite Contacts Card -->
+            <div>
+              <div
+                class="bg-white dark:bg-gray-800 rounded-2xl shadow p-6 flex flex-col"
+              >
+                <h2
+                  class="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300"
+                >
+                  Total vs Favorite Contacts
+                </h2>
+                <div
+                  class="flex-1 bg-gray-50 dark:bg-gray-700 rounded-lg p-4 flex items-center justify-center"
+                >
+                  <canvas id="contactVsFavoriteChart"></canvas>
+                </div>
+              </div>
+            </div>
+            <!-- Feedback Ratings Card -->
+            <div
+              class="col-span-full lg:col-span-1 bg-white dark:bg-gray-800 rounded-2xl shadow p-6 flex flex-col"
+            >
+              <h2
+                class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200"
+              >
+                Feedback Ratings
+              </h2>
+              <div
+                class="flex-1 bg-gray-50 dark:bg-gray-700 rounded-lg p-4 flex items-center justify-center"
+              >
+                <canvas id="feedbackChart" class="h-60"></canvas>
+              </div>
+              <p class="mt-4 text-sm text-gray-600 dark:text-gray-400">
+                ⭐ Average Rating:
+                <strong th:text="${averageRating}">0</strong> / 5
+              </p>
+            </div>
+            <!-- To-Do Share Card -->
+            <div
+              class="bg-white dark:bg-gray-800 rounded-2xl shadow p-6 flex flex-col"
+            >
+              <h2
+                class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200"
+              >
+                To-Do Tasks Percentage per User
+              </h2>
+              <div
+                class="flex-1 bg-gray-50 dark:bg-gray-700 rounded-lg p-4 flex items-center justify-center"
+              >
+                <canvas id="todoPercentageChart" class="w-full h-60"></canvas>
+              </div>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 mb-6 gap-4">
+            <!-- Contacts Over Time Card -->
+            <div
+              class="bg-white dark:bg-gray-800 rounded-2xl shadow p-6 flex flex-col"
+            >
+              <h2
+                class="text-xl font-semibold mb-4 text-gray-700 dark:text-gray-300"
+              >
+                Contacts Over Time
+              </h2>
+              <div class="flex items-center mb-4">
+                <label
+                  for="timeRangeSelect"
+                  class="mr-2 text-gray-600 dark:text-gray-400"
+                  >View:</label
+                >
+                <select
+                  id="timeRangeSelect"
+                  class="border rounded-md px-2 py-1 bg-gray-50 dark:bg-gray-700 border-gray-300 dark:border-gray-600 text-gray-800 dark:text-gray-200"
+                >
+                  <option value="daily">Daily</option>
+                  <option value="monthly">Monthly</option>
+                  <option value="yearly">Yearly</option>
+                </select>
+              </div>
+              <div
+                class="flex-1 bg-none dark:bg-gray-700 rounded-lg p-4 flex items-center justify-center max-w-[100%]"
+              >
+                <canvas id="contactsOverTimeChart"></canvas>
+              </div>
+            </div>
+            <!-- Contact Share Card -->
+            <div
+              class="bg-white dark:bg-gray-800 rounded-2xl shadow p-6 flex flex-col"
+            >
+              <h2
+                class="text-xl font-semibold mb-4 text-gray-800 dark:text-gray-200"
+              >
+                Contact Share per User (%)
+              </h2>
+              <div
+                class="flex-1 bg-gray-50 dark:bg-gray-700 rounded-lg p-4 flex items-center justify-center"
+              >
+                <canvas id="contactPercentageChart" class="w-full"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      console.log("this is admin page");
+    </script>
+    <script>
+      // Data for Total Contacts vs Favorite Contacts Pie Chart
+      const totalContacts = [[${ totalContacts }]] ;
+      const favoriteContacts = [[${ favoriteContacts }]];
+      const contactVsFavoriteData = {
+        labels: ["Total Contacts", "Favorite Contacts"],
+        datasets: [
+          {
+            data: [totalContacts, favoriteContacts],
+            backgroundColor: ["#36A2EB", "#FF6384"], // Blue for total, Red for favorite
+            hoverBackgroundColor: ["#36A2EB", "#FF6384"],
+          },
+        ],
+      };
+
+      // Create the Pie Chart
+      new Chart(document.getElementById("contactVsFavoriteChart"), {
+        type: "pie",
+        data: contactVsFavoriteData,
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: "top",
+            },
+            tooltip: {
+              callbacks: {
+                label: function (tooltipItem) {
+                  return tooltipItem.label + ": " + tooltipItem.raw;
+                },
+              },
+            },
+          },
+        },
+      });
+    </script>
+
+    <script th:inline="javascript">
+      const dailyData = [[${ contactsPerDay }]];
+      const monthlyData = [[${ contactsPerMonth }]];
+      const yearlyData = [[${ contactsPerYear }]];
+
+      function convertToChartData(data) {
+        const labels = Object.keys(data);
+        const values = Object.values(data);
+        return {
+          labels: labels,
+          datasets: [
+            {
+              label: "Contacts Added",
+              data: values,
+              borderColor: "rgb(75, 192, 192)",
+              fill: false,
+              tension: 0.2,
+            },
+          ],
+        };
+      }
+
+      document.addEventListener("DOMContentLoaded", function () {
+        const ctx = document
+          .getElementById("contactsOverTimeChart")
+          .getContext("2d");
+        let contactsOverTimeChart = new Chart(ctx, {
+          type: "line",
+          data: convertToChartData(dailyData),
+          options: {
+            responsive: true,
+            plugins: {
+              legend: { position: "top" },
+            },
+          },
+        });
+
+        document
+          .getElementById("timeRangeSelect")
+          .addEventListener("change", function () {
+            const selected = this.value;
+            let newData =
+              selected === "monthly"
+                ? convertToChartData(monthlyData)
+                : selected === "yearly"
+                ? convertToChartData(yearlyData)
+                : convertToChartData(dailyData);
+            contactsOverTimeChart.data = newData;
+            contactsOverTimeChart.update();
+          });
+      });
+    </script>
+
+    <script th:inline="javascript">
+      const contactPercentageData = [[${ contactPercentagePerUser }]];
+      const labels = Object.keys(contactPercentageData);
+      const data = Object.values(contactPercentageData);
+
+      new Chart(document.getElementById("contactPercentageChart"), {
+        type: "bar",
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: "Contact Share (%)",
+              data: data,
+              backgroundColor: "rgba(54, 162, 235, 0.6)",
+              borderColor: "rgba(54, 162, 235, 1)",
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          indexAxis: "y",
+          scales: {
+            x: {
+              beginAtZero: true,
+              max: 100,
+            },
+          },
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function (context) {
+                  return context.parsed.x.toFixed(2) + "%";
+                },
+              },
+            },
+          },
+        },
+      });
+    </script>
+
+    <script th:inline="javascript">
+      const todoData = [[${ todoPercentagePerUser }]];
+      const todoLabels = Object.keys(todoData);
+      const todoValues = Object.values(todoData);
+
+      new Chart(document.getElementById("todoPercentageChart"), {
+        type: "pie",
+        data: {
+          labels: todoLabels,
+          datasets: [
+            {
+              data: todoValues,
+              backgroundColor: [
+                "#36A2EB",
+                "#FF6384",
+                "#FFCE56",
+                "#4BC0C0",
+                "#9966FF",
+                "#FF9F40",
+              ],
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: { display:false,position: "bottom" },
+            tooltip: {
+              callbacks: {
+                label: function (context) {
+                  return context.label + ": " + context.raw.toFixed(2) + "%";
+                },
+              },
+            },
+          },
+        },
+      });
+    </script>
+
+    <script th:inline="javascript">
+      // Parse the JSON string passed from the controller
+      const ratingDistribution = JSON.parse(
+        /*[[${ratingDistributionJson}]]*/ "{}"
+      );
+      console.log(ratingDistribution);
+
+      const feedbackLabels = Object.keys(ratingDistribution).map(
+        (key) => key + "★"
+      ); // ['1','2','3','4','5']
+      const feedbackData = Object.values(ratingDistribution); // [2,0,0,2,4]
+
+      new Chart(document.getElementById("feedbackChart"), {
+        type: "bar",
+        data: {
+          labels: feedbackLabels,
+          datasets: [
+            {
+              label: "Number of Users",
+              data: feedbackData,
+              backgroundColor: "rgba(54, 162, 235, 0.6)",
+              borderColor: "rgba(54, 162, 235, 1)",
+              borderWidth: 1,
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: {
+              title: {
+                display: true,
+                text: "Rating",
+              },
+              ticks: {
+                precision: 0,
+              },
+            },
+            y: {
+              beginAtZero: true,
+              title: {
+                display: true,
+                text: "Number of Users",
+              },
+              ticks: {
+                stepSize: 1,
+                precision: 0,
+              },
+            },
+          },
+        },
+      });
+    </script>
+  </body>
+</html>

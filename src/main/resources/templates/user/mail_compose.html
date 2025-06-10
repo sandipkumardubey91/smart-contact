@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<!-- Tell Thymeleaf: “Use base.html’s parent(fragment definitions)  
+     and insert my content/title/script into those placeholders.” -->
+<html
+  lang="en"
+  th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}"
+>
+  <!-- ——— Title fragment ——— -->
+  <head>
+    <title th:fragment="title">Compose Mail</title>
+  </head>
+
+  <!-- ——— Content fragment ——— -->
+  <body>
+    <div id="content">
+      <div class="sm:px-32 md:pt-20 max-md:pt-32">
+        <div
+          class="animate-fadeIn contacts_container border shad shadow-2xl shadow-gray-400 dark:shadow-none md:rounded-lg dark:border-gray-800 border-gray-200 mt-10 p-6 bg-white dark:bg-gray-800"
+        >
+          <h2 class="text-3xl mb-4">
+            Mail to <span th:text="${contact.name}">Contact Name</span>
+          </h2>
+
+          <form
+            th:action="@{/user/message/mail/{id}(id=${contact.id})}"
+            th:object="${mailForm}"
+            method="post"
+            class="space-y-4"
+          >
+            <div>
+              <label class="block mb-1">To</label>
+              <input
+                type="email"
+                th:field="*{to}"
+                readonly
+                class="mt-2 bg-gray-100 border border-gray-300 hover:border-gray-600 dark:hover:border-gray-100 text-gray-900 text-sm rounded-md w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+              />
+            </div>
+
+            <div>
+              <label class="block mb-1">Subject</label>
+              <input
+                type="text"
+                th:field="*{subject}"
+                required
+                class="mt-2 bg-gray-100 border border-gray-300 hover:border-gray-600 dark:hover:border-gray-100 text-gray-900 text-sm rounded-md w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+              />
+            </div>
+
+            <div>
+              <label class="block mb-1">Message</label>
+              <textarea
+                th:field="*{body}"
+                rows="8"
+                required
+                class="mt-2 bg-gray-100 border border-gray-300 hover:border-gray-600 dark:hover:border-gray-100 text-gray-900 text-sm rounded-md w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+              ></textarea>
+            </div>
+
+            <div class="flex space-x-2">
+              <button
+                type="submit"
+                class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+              >
+                Send Email
+              </button>
+              <a
+                th:href="@{/user/contacts}"
+                class="px-4 py-2 bg-gray-300 text-black rounded hover:bg-gray-400"
+              >
+                Cancel
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      console.log("mail page loaded");
+    </script>
+  </body>
+</html>

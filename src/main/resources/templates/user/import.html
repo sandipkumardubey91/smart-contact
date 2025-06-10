@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}"
+>
+  <head>
+    <title data-th-text="${loggedInUser.name}+' |  SCM'">Dashboard Page</title>
+  </head>
+  <body>
+    <div id="content">
+      <!-- side bar  -->
+
+      <!-- <div th:if="${loggedInUser}">
+        <div data-th-replace="~{user/sidebar::sidebar}"></div>
+      </div> -->
+
+      <div class="sm:px-32 animate-fadeIn md:pt-24 max-md:pt-32">
+        <div class="flex items-center justify-center">
+          <form
+            id="importForm"
+            class="relative w-full max-w-2xl max-h-full"
+            method="post"
+            enctype="multipart/form-data"
+            th:action="@{/user/contacts/upload}"
+          >
+            <!-- Modal content -->
+            <div
+              class="block my-10 md:py-6 md:px-3 max-md:py-4 max-md:px-2 bg-white dark:bg-gray-800 md:rounded-3xl shadow-2xl p-10 border border-purple-200 dark:border-gray-700"
+            >
+              <!-- Header -->
+              <div class="flex items-start justify-between p-6">
+                <h3
+                  class="text-3xl font-semibold text-gray-900 dark:text-white"
+                >
+                  Import Contacts
+                </h3>
+              </div>
+
+              <!-- Body -->
+              <div class="px-6 pb-6 space-y-6">
+                <p
+                  class="text-base leading-relaxed text-gray-500 dark:text-gray-400"
+                >
+                  Upload your contacts' data file here.
+                </p>
+                <!-- You can include your form input here -->
+                <label
+                  for="dropzone-file"
+                  class="flex flex-col items-center justify-center py-10 w-full border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-100 dark:hover:bg-gray-600 dark:bg-gray-700 hover:bg-gray-200 dark:border-gray-600 dark:hover:border-gray-500"
+                >
+                  <div class="flex flex-col items-center justify-center">
+                    <svg
+                      class="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 20 16"
+                    >
+                      <path
+                        stroke="currentColor"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                      />
+                    </svg>
+                    <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
+                      <span class="font-semibold">Click to upload</span> or drag
+                      and drop
+                    </p>
+                    <p class="text-xs text-gray-500 dark:text-gray-400">
+                      CSV, XLSX, XLS
+                    </p>
+                  </div>
+                  <input
+                    id="dropzone-file"
+                    type="file"
+                    name="file"
+                    accept=".csv,.xlsx,.xls"
+                    required
+                    class="hidden"
+                  />
+                </label>
+              </div>
+
+              <!-- Footer -->
+              <div class="flex justify-center items-center pt-4 pb-8 space-x-2">
+                <button
+                  type="submit"
+                  class="text-white bg-green-700 hover:bg-green-800 px-4 py-2 rounded"
+                >
+                  Upload
+                </button>
+                <a
+                  data-th-href="@{'/user/contacts'}"
+                  class="text-white bg-gray-600 hover:bg-gray-700 px-4 py-2 rounded"
+                >
+                  Cancel
+                </a>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const fileInput = document.getElementById("dropzone-file");
+        const label = fileInput.closest("label");
+
+        fileInput.addEventListener("change", function () {
+          const fileName =
+            this.files[0]?.name || "Click to upload or drag and drop";
+          const textContainer = label.querySelector(".mb-2");
+          if (textContainer) {
+            textContainer.innerHTML = `<span class="font-semibold">${fileName}</span>`;
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

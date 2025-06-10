@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Edit User</title>
+  </head>
+
+  <body>
+    <div id="content">
+      <div class="animate-fadeIn sm:px-32 md:pt-32 max-md:pt-44">
+        <div
+          class="max-w-xl mx-auto p-6 bg-white dark:bg-gray-800 md:rounded-xl shadow-lg"
+        >
+          <h2 class="text-2xl font-semibold text-gray-800 dark:text-white mb-6">
+            Edit User
+          </h2>
+
+          <form
+            th:action="@{/admin/user/update}"
+            th:object="${user}"
+            method="post"
+            class="space-y-4"
+          >
+            <input type="hidden" th:field="*{userId}" />
+
+            <!-- Enabled -->
+            <div class="flex flex-col space-y-2">
+              <label class="mb-1 text-gray-700 dark:text-gray-300 font-medium"
+                >User Enabled:</label
+              >
+              <select
+                th:field="*{enabled}"
+                class="bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-md p-2.5 hover:border-gray-500 dark:hover:border-gray-400 transition"
+              >
+                <option value="true">True</option>
+                <option value="false">False</option>
+              </select>
+            </div>
+
+            <!-- Email Verified -->
+            <div class="flex flex-col space-y-2">
+              <label class="mb-1 text-gray-700 dark:text-gray-300 font-medium"
+                >Email Verified:</label
+              >
+              <select
+                th:field="*{emailVerified}"
+                class="bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-md p-2.5 hover:border-gray-500 dark:hover:border-gray-400 transition"
+              >
+                <option value="true">True</option>
+                <option value="false">False</option>
+              </select>
+            </div>
+
+            <!-- Phone Verified -->
+            <div class="flex flex-col space-y-2">
+              <label class="mb-1 text-gray-700 dark:text-gray-300 font-medium"
+                >Phone Verified:</label
+              >
+              <select
+                th:field="*{phoneVerified}"
+                class="bg-gray-100 dark:bg-gray-700 border border-gray-300 dark:border-gray-600 text-gray-900 dark:text-white text-sm rounded-md p-2.5 hover:border-gray-500 dark:hover:border-gray-400 transition"
+              >
+                <option value="true">True</option>
+                <option value="false">False</option>
+              </select>
+            </div>
+
+            <!-- Buttons -->
+            <div class="flex items-center space-x-4 pt-4">
+              <button
+                type="submit"
+                class="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg shadow-md transition duration-300"
+              >
+                Update
+              </button>
+              <a
+                th:href="@{/admin/manage}"
+                class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-medium py-2 px-4 rounded-lg transition duration-300"
+              >
+                Cancel
+              </a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script></script>
+  </body>
+</html>

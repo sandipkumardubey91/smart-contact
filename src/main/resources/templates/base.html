@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  th:fragment="parent(content,title,script)"
+  xmlns="http://www.w3.org"
+  class="light"
+>
+  <head>
+    <script>
+      (function () {
+        const theme = localStorage.getItem("theme") || "light";
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(theme);
+      })();
+    </script>
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-th-replace="${title}">SCM |</title>
+    <link rel="stylesheet" data-th-href="@{'/css/output.css'}" />
+    <link rel="stylesheet" data-th-href="@{'/css/style.css'}" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.css"
+      rel="stylesheet"
+    />
+    <link rel="icon" type="image/png" href="/images/communicate.png" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+  </head>
+  <body
+    class="min-h-screen transition-colors duration-500 ease-in-out flex flex-col w-full bg-gray-200 text-gray-900 dark:bg-gray-900 dark:text-white"
+  >
+    <!-- common header  -->
+    <div th:if="${loggedInUser}">
+      <div th:if="${loggedInUser.role}!='ROLE_ADMIN'">
+        <div th:replace="~{user/user_navbar :: user-navbar}"></div>
+      </div>
+      <div th:if="${loggedInUser.role}== 'ROLE_ADMIN'">
+        <div th:replace="~{admin/admin_navbar :: admin-navbar}"></div>
+      </div>
+    </div>
+
+    <!-- user is not logged : sidebar-->
+    <!-- <div th:if="${loggedInUser}">
+      <div data-th-replace="~{user/sidebar::sidebar}"></div>
+    </div> -->
+
+    <!-- user is not logged : navbar -->
+    <div th:unless="${loggedInUser}">
+      <div data-th-replace="~{navbar :: navbar}"></div>
+    </div>
+
+    <!--  side bar  -->
+    <div th:if="${loggedInUser}">
+      <div th:if="${loggedInUser.role}=='ROLE_USER'">
+        <div data-th-replace="~{user/sidebar :: sidebar}"></div>
+      </div>
+    </div>
+
+    <!-- main content  -->
+
+    <div class="flex-grow">
+      <section data-th-replace="${content}"></section>
+    </div>
+
+    <!-- footer  -->
+    <footer class="bg-gray-800 text-white mt-10 pt-2 pb-3">
+      <div class="container mx-auto text-center">
+        <p>
+          &copy; Smart Contact Manager. All rights reserved. Follow us on
+          <a href="#" class="text-blue-400">Facebook</a>,
+          <a href="#" class="text-blue-400">Twitter</a>, and
+          <a href="#" class="text-blue-400">Instagram</a>.
+        </p>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/flowbite@2.4.1/dist/flowbite.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script data-th-src="@{'/js/script.js'}"></script>
+    <script data-th-src="@{'/js/logout.js'}"></script>
+    <script data-th-src="@{'/js/sidebar.js'}"></script>
+    <th:block data-th-replace="${script}"></th:block>
+  </body>
+</html>

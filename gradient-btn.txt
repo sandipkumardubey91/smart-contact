@@ -1,0 +1,69 @@
+ html:not(.dark) .gradient-btn {
+  background-image: linear-gradient(
+    to right,
+    #5e309f,
+    #7749b8,
+    #bc98c8
+  ); /* light gradient */
+  position: relative;
+}
+
+/* Dark Mode Gradient (Black, White, and Gray) */
+html.dark .gradient-btn {
+  background-image: linear-gradient(
+    to right,
+    #727272,
+    #a0a0a0,
+    #c6c6c6
+  ); /* dark gradient */
+  position: relative;
+}
+
+/* Hover Effect for Light Mode (Colorful) */
+html:not(.dark) .gradient-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(
+    to right,
+    #49237e,
+    #5b3491,
+    #916c9d
+  ); /* darkened gradient */
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  z-index: 1;
+}
+/*
+/* Hover Effect for Dark Mode (Black, White, and Gray) */
+html.dark .gradient-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(
+    to right,
+
+    #6d6d6d,
+    #878686,
+    #cfcece
+  ); /* dark gradient overlay */
+  opacity: 0;
+  transition: opacity 0.5s ease-in-out;
+  z-index: 1;
+}
+
+/* Hover Effects (opacity) */
+html:not(.dark) .gradient-btn:hover::before,
+html.dark .gradient-btn:hover::before {
+  opacity: 1;
+}
+
+/* Ensure content inside the button stays on top */
+.gradient-btn > * {
+  position: relative;
+  z-index: 10;
+}
+.gradient-btn::before {
+  mix-blend-mode: overlay;
+  border-radius: inherit; /* ✅ Inherits rounded-full from the parent */
+} 

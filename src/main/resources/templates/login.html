@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}"
+>
+  <head>
+    <title>Login</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="grid grid-cols-12 animate-fadeIn md:pt-24 max-md:pt-32">
+        <div class="md:col-span-4"></div>
+        <div class="md:col-span-4 col-span-12">
+          <!-- 6 ki spance le rhi hai -->
+          <!-- card -->
+
+          <div
+            class="block my-10 py-6 px-7 border-t-[10px] border-gray-900 bg-white md:rounded-xl shadow-2xl dark:bg-gray-800 dark:border-gray-100"
+          >
+            <!-- message here -->
+
+            <div data-th-replace="message::messagebox"></div>
+
+            <!-- <div class="flex mb-4 items-end justify-start">
+              <img
+                data-th-src="@{'/images/communicate.png'}"
+                class="h-12 shadow rounded-sm border border-gray-800"
+                alt="SCM logo"
+              />
+              <h5
+                class="text-2xl ml-2 font-bold tracking-tight text-gray-900 dark:text-white"
+              >
+                Login Here
+              </h5>
+            </div> -->
+            <div
+              class="flex flex-col justify-center items-center space-y-3 mt-3"
+            >
+              <img
+                data-th-src="@{'/images/communicate.png'}"
+                class="h-20 w-20 shadow rounded-sm border border-gray-800 dark:border-gray-200"
+                alt="SCM logo"
+              />
+              <h5
+                class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+              >
+                Login Here
+              </h5>
+              <p class="text-sm text-gray-600 dark:text-gray-400">
+                Start managing contacts on cloud ...
+              </p>
+            </div>
+
+            <div class="text-red-600 text-center my-3" th:if="${param.error}">
+              <span>Invalid username or password.</span>
+            </div>
+
+            <!-- <div
+              class="text-green-600 text-center my-3"
+              th:if="${param.logout}"
+            >
+              You have been logged out.
+            </div> -->
+
+            <!-- this is  form -->
+            <form
+              method="post"
+              data-th-action="@{'/authenticate'}"
+              class="mt-6"
+            >
+              <!-- username field -->
+              <div class="mb-4">
+                <label
+                  for="email"
+                  class="text-sm font-medium text-gray-900 dark:text-white"
+                  >Email</label
+                >
+                <input
+                  name="email"
+                  type="email"
+                  id="email"
+                  class="mt-2 bg-gray-100 border border-gray-300 hover:border-gray-600 dark:hover:border-gray-100 text-gray-900 text-sm rounded-md w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                  placeholder="name@flowbite.com"
+                  required
+                />
+                <!-- <p
+                  data-th-if="${#fields.hasErrors('email')}"
+                  data-th-errors="*{email}"
+                  class="text-red-600 px-1 py-2"
+                ></p> -->
+              </div>
+              <!-- password field -->
+              <div class="mb-10">
+                <label
+                  for="password"
+                  class="mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >New Password</label
+                >
+
+                <!-- Relative wrapper to align icon properly -->
+                <div
+                  class="flex bg-gray-100 border border-gray-300 hover:border-gray-600 dark:hover:border-gray-100 text-gray-900 text-sm rounded-md w-full p-0 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                >
+                  <input
+                    name="password"
+                    type="password"
+                    id="password"
+                    required
+                    placeholder="********"
+                    class="bg-gray-100 dark:bg-gray-700 border-none w-full focus:ring-0 rounded-md"
+                  />
+
+                  <!-- Eye Button, vertically centered inside input -->
+                  <button
+                    type="button"
+                    onclick="togglePasswordVisibility()"
+                    class="ml-1 mr-3 text-gray-600 dark:text-gray-300 focus:outline-none"
+                  >
+                    <i id="eye-icon" class="fas fa-eye"></i>
+                  </button>
+                </div>
+                <!-- Error Message -->
+                <!-- <p
+                  data-th-if="${#fields.hasErrors('password')}"
+                  data-th-errors="*{password}"
+                  class="text-red-600 px-1 py-2"
+                ></p> -->
+              </div>
+
+              <div class="mb-3 w-full">
+                <button
+                  type="submit"
+                  class="relative text-white font-bold bg-gray-800 hover:bg-gray-900 focus:ring-2 focus:outline-none focus:ring-blue-300 rounded-md w-full px-4 py-2.5 text-center dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-900 dark:hover:text-white transition-colors duration-300 ease-linear"
+                >
+                  Login
+                </button>
+                <!-- <button
+                  type="reset"
+                  class="px-3 py-2 rounded bg-red-800 hover:bg-red-900 text-white dark:bg-blue-800 dark:hover:bg-blue-700"
+                >
+                  Reset
+                </button> -->
+              </div>
+            </form>
+
+            <div class="flex items-center mt-8">
+              <hr
+                class="flex-grow border-t border-gray-500 dark:border-gray-300"
+              />
+              <span class="mx-4 text-gray-700 dark:text-gray-300"
+                >or sign in with</span
+              >
+              <hr
+                class="flex-grow border-t border-gray-500 dark:border-gray-300"
+              />
+            </div>
+            <div
+              class="social-buttons-container flex justify-center items-center flex-col space-y-4 my-6"
+            >
+              <div class="flex space-x-3">
+                <a
+                  class="relative group p-4 flex justify-center items-center bg-gray-200 hover:bg-white border-2 hover:border-gray-800 dark:hover:bg-gray-900 dark:bg-gray-200 dark:border-none dark:text-gray-800 focus:ring-black focus:ring-offset-gray-100 dark:hover:text-white transition ease-in duration-200 text-center text-base font-semibold shadow-xl focus:outline-none focus:ring-1 focus:ring-offset-2 rounded-full"
+                  data-th-href="@{'/oauth2/authorization/google'}"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    class="dark:hidden absolute"
+                    viewBox="0 0 48 48"
+                  >
+                    <path
+                      fill="#EA4335"
+                      d="M24 9.5c3.54 0 6.26 1.38 7.7 2.55l5.72-5.73C33.47 3.12 29.14 1 24 1 14.99 1 7.48 6.84 4.39 14.29l6.96 5.41C13.06 13.27 17.99 9.5 24 9.5z"
+                    />
+                    <path
+                      fill="#4285F4"
+                      d="M46.5 24.5c0-1.75-.15-3.01-.48-4.32H24v8.13h12.7c-.25 2.1-1.62 5.26-4.64 7.3l7.13 5.54c4.16-3.84 7.31-9.48 7.31-16.65z"
+                    />
+                    <path
+                      fill="#FBBC05"
+                      d="M10.09 28.57C9.4 26.92 9 25.01 9 23c0-2 .4-3.92 1.09-5.57L3.11 11.9C1.58 14.94.69 18.34.69 23c0 4.65.89 8.05 2.42 11.1l6.98-5.53z"
+                    />
+                    <path
+                      fill="#34A853"
+                      d="M24 46c6.14 0 11.29-2.03 15.05-5.53l-7.13-5.54c-1.94 1.3-4.53 2.06-7.92 2.06-6.01 0-11-3.78-12.82-9.01l-6.98 5.53C7.48 41.16 14.99 46 24 46z"
+                    />
+                  </svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 533.5 544.3"
+                    width="20"
+                    height="20"
+                    class="absolute hidden dark:block"
+                    fill="currentColor"
+                  >
+                    <path
+                      d="M533.5 278.4c0-17.4-1.6-34.1-4.6-50.4H272v95.3h146.9c-6.4 34.7-25.1 64.2-53.4 83.9v69h86.4c50.6-46.6 81.6-115.3 81.6-197.8z"
+                    />
+                    <path
+                      d="M272 544.3c72.6 0 133.5-24.1 178-65.5l-86.4-69c-24 16.1-54.7 25.7-91.6 25.7-70.5 0-130.3-47.6-151.6-111.4h-90.2v70.4c44.5 88.1 135.2 149.8 241.8 149.8z"
+                    />
+                    <path
+                      d="M120.4 324.1c-10.3-30.7-10.3-63.7 0-94.4v-70.4H30.2C10.5 198.6 0 239.8 0 272s10.5 73.4 30.2 112.7l90.2-60.6z"
+                    />
+                    <path
+                      d="M272 107.7c39.4-.6 77 13.8 106 40.2l79.1-79.1C415.3 24.2 355.2 0 272 0 165.4 0 74.7 61.7 30.2 149.8l90.2 70.4C141.7 155.3 201.5 107.7 272 107.7z"
+                    />
+                  </svg>
+                </a>
+
+                <a
+                  type="button"
+                  class="relative group p-4 flex justify-center items-center bg-gray-200 hover:bg-white border-2 hover:border-gray-800 dark:hover:bg-gray-900 dark:bg-gray-200 dark:border-none dark:text-gray-800 focus:ring-gray-500 focus:ring-offset-gray-200 dark:hover:text-white transition ease-in duration-200 text-center text-base font-semibold shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-full"
+                  data-th-href="@{'/oauth2/authorization/github'}"
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="20"
+                    height="20"
+                    fill="currentColor"
+                    class="absolute"
+                    viewBox="0 0 1792 1792"
+                  >
+                    <path
+                      d="M896 128q209 0 385.5 103t279.5 279.5 103 385.5q0 251-146.5 451.5t-378.5 277.5q-27 5-40-7t-13-30q0-3 .5-76.5t.5-134.5q0-97-52-142 57-6 102.5-18t94-39 81-66.5 53-105 20.5-150.5q0-119-79-206 37-91-8-204-28-9-81 11t-92 44l-38 24q-93-26-192-26t-192 26q-16-11-42.5-27t-83.5-38.5-85-13.5q-45 113-8 204-79 87-79 206 0 85 20.5 150t52.5 105 80.5 67 94 39 102.5 18q-39 36-49 103-21 10-45 15t-57 5-65.5-21.5-55.5-62.5q-19-32-48.5-52t-49.5-24l-20-3q-21 0-29 4.5t-5 11.5 9 14 13 12l7 5q22 10 43.5 38t31.5 51l10 23q13 38 44 61.5t67 30 69.5 7 55.5-3.5l23-4q0 38 .5 88.5t.5 54.5q0 18-13 30t-40 7q-232-77-378.5-277.5t-146.5-451.5q0-209 103-385.5t279.5-279.5 385.5-103zm-477 1103q3-7-7-12-10-3-13 2-3 7 7 12 9 6 13-2zm31 34q7-5-2-16-10-9-16-3-7 5 2 16 10 10 16 3zm30 45q9-7 0-19-8-13-17-6-9 5 0 18t17 7zm42 42q8-8-4-19-12-12-20-3-9 8 4 19 12 12 20 3zm57 25q3-11-13-16-15-4-19 7t13 15q15 6 19-6zm63 5q0-13-17-11-16 0-16 11 0 13 17 11 16 0 16-11zm58-10q-2-11-18-9-16 3-14 15t18 8 14-14z"
+                    ></path>
+                  </svg>
+                </a>
+                <a
+                  type="button"
+                  class="relative p-4 flex justify-center items-center bg-gray-200 hover:bg-white border-2 hover:border-gray-800 dark:hover:bg-gray-900 dark:bg-gray-200 dark:border-none dark:text-gray-800 focus:ring-gray-500 focus:ring-offset-gray-200 dark:hover:text-white transition ease-in duration-200 text-center text-base font-semibold shadow-xl focus:outline-none focus:ring-2 focus:ring-offset-2 rounded-full"
+                  data-th-href="@{'/login'}"
+                >
+                  <i class="absolute fa-solid fa-envelope"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      console.log("Login page");
+      function togglePasswordVisibility() {
+        var passwordInput = document.getElementById("password");
+        var eyeIcon = document.getElementById("eye-icon");
+
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+          eyeIcon.classList.remove("fa-eye");
+          eyeIcon.classList.add("fa-eye-slash");
+        } else {
+          passwordInput.type = "password";
+          eyeIcon.classList.remove("fa-eye-slash");
+          eyeIcon.classList.add("fa-eye");
+        }
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  th:replace="~{base ::parent(~{:: #content}, ~{::title}, ~{:: script})}"
+>
+  <head>
+    <title>Sign Up Page</title>
+  </head>
+  <body>
+    <div id="content">
+      <div class="grid grid-cols-12 animate-fadeIn mt-4 md:pt-20 max-md:pt-32">
+        <div class="md:col-span-4"></div>
+        <div class="md:col-span-4 col-span-12">
+          <!-- Card container -->
+          <div
+            class="block my-10 py-6 px-7 border-t-[10px] border-gray-900 bg-white md:rounded-xl shadow-2xl dark:bg-gray-800 dark:border-gray-100"
+          >
+            <div></div>
+            <!-- message here -->
+
+            <!-- <div class="flex mb-4 items-end justify-start">
+              <img
+                data-th-src="@{'/images/communicate.png'}"
+                class="h-12 shadow rounded-sm border border-gray-800"
+                alt="SCM logo"
+              />
+              <h5
+                class="text-2xl ml-2 font-bold tracking-tight text-gray-900 dark:text-white"
+              >
+                Signup Here
+              </h5>
+            </div>
+            <p class="text-sm text-gray-600 dark:text-gray-400">
+              Start managing contacts on cloud ...
+            </p> -->
+            <div
+              class="flex flex-col justify-center items-center space-y-3 mt-3"
+            >
+              <img
+                data-th-src="@{'/images/communicate.png'}"
+                class="h-20 w-20 shadow rounded-sm border border-gray-800 dark:border-gray-200"
+                alt="SCM logo"
+              />
+              <h5
+                class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+              >
+                Signup Here
+              </h5>
+              <p class="text-sm text-gray-600 dark:text-gray-400">
+                Start managing contacts on cloud ...
+              </p>
+            </div>
+
+            <!-- Form -->
+            <form
+              data-th-action="@{'/do-register'}"
+              method="post"
+              class="mt-6"
+              data-th-object="${userForm}"
+              novalidate
+            >
+              <!-- Name -->
+              <div class="mb-3">
+                <label
+                  for="name"
+                  class="mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >Name</label
+                >
+                <input
+                  type="text"
+                  id="name"
+                  placeholder="Enter here"
+                  required
+                  data-th-field="*{name}"
+                  class="mt-2 bg-gray-100 border border-gray-300 hover:border-gray-600 dark:hover:border-gray-100 text-gray-900 text-sm rounded-md w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                />
+                <p
+                  data-th-if="${#fields.hasErrors('name')}"
+                  data-th-errors="*{name}"
+                  class="text-red-600 px-1 py-2"
+                >
+                  Name is required
+                </p>
+              </div>
+
+              <!-- Email -->
+              <div class="mb-3">
+                <label
+                  for="email"
+                  class="mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >Email</label
+                >
+                <input
+                  data-th-field="*{email}"
+                  type="email"
+                  id="email"
+                  placeholder="name@flowbite.com"
+                  required
+                  class="mt-2 bg-gray-100 border border-gray-300 hover:border-gray-600 dark:hover:border-gray-100 text-gray-900 text-sm rounded-md w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                />
+                <p
+                  data-th-if="${#fields.hasErrors('email')}"
+                  data-th-errors="*{email}"
+                  class="text-red-600 px-1 py-2"
+                ></p>
+              </div>
+
+              <!-- Password -->
+              <div class="mb-3">
+                <label
+                  for="password"
+                  class="mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >New Password</label
+                >
+
+                <!-- Relative wrapper to align icon properly -->
+                <div
+                  class="flex bg-gray-100 border border-gray-300 hover:border-gray-600 dark:hover:border-gray-100 text-gray-900 text-sm rounded-md w-full p-0 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                >
+                  <input
+                    data-th-field="*{password}"
+                    type="password"
+                    id="password"
+                    required
+                    placeholder="********"
+                    class="bg-gray-100 dark:bg-gray-700 border-none w-full focus:ring-0 rounded-md"
+                  />
+
+                  <!-- Eye Button, vertically centered inside input -->
+                  <button
+                    type="button"
+                    onclick="togglePasswordVisibility()"
+                    class="ml-1 mr-3 text-gray-600 dark:text-gray-300 focus:outline-none"
+                  >
+                    <i id="eye-icon" class="fas fa-eye"></i>
+                  </button>
+                </div>
+                <!-- Error Message -->
+                <!-- <p
+                  data-th-if="${#fields.hasErrors('password')}"
+                  data-th-errors="*{password}"
+                  class="text-red-600 px-1 py-2"
+                ></p> -->
+              </div>
+
+              <!-- Phone -->
+              <div class="mb-3">
+                <label
+                  for="phone"
+                  class="mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >Contact Number</label
+                >
+                <input
+                  data-th-field="*{phoneNumber}"
+                  type="text"
+                  id="phone"
+                  required
+                  class="mt-2 bg-gray-100 border border-gray-300 hover:border-gray-600 dark:hover:border-gray-100 text-gray-900 text-sm rounded-md w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                />
+                <p
+                  data-th-if="${#fields.hasErrors('phoneNumber')}"
+                  data-th-errors="*{phoneNumber}"
+                  class="text-red-600 px-1 py-2"
+                ></p>
+              </div>
+
+              <!-- About -->
+              <div class="mb-5">
+                <label
+                  for="about"
+                  class="mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                  >Write something about yourself</label
+                >
+                <textarea
+                  data-th-field="*{about}"
+                  id="about"
+                  rows="6"
+                  placeholder="Write here..."
+                  class="mt-2 bg-gray-100 border border-gray-300 hover:border-gray-600 dark:hover:border-gray-100 text-gray-900 text-sm rounded-md w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white"
+                ></textarea>
+                <p
+                  data-th-if="${#fields.hasErrors('about')}"
+                  data-th-errors="*{about}"
+                  class="text-red-600 px-1 py-2"
+                ></p>
+              </div>
+
+              <!-- Buttons -->
+              <div class="my-8 flex-col justify-center space-y-6">
+                <button
+                  type="submit"
+                  class="relative text-white font-bold bg-gray-800 hover:bg-gray-900 focus:ring-2 focus:outline-none focus:ring-blue-300 rounded-md w-full px-4 py-2.5 text-center dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-900 dark:hover:text-white transition-colors duration-300 ease-linear"
+                >
+                  Signup
+                </button>
+                <!-- <button
+                  type="reset"
+                  class="relative text-white font-bold bg-red-800 hover:bg-red-900 focus:ring-2 focus:outline-none focus:ring-blue-300 rounded-md w-full px-4 py-2.5 text-center dark:bg-red-200 dark:text-gray-900 dark:hover:bg-red-800 dark:hover:text-white transition-colors duration-300 ease-linear"
+                >
+                  Reset
+                </button> -->
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      console.log("Signup page");
+      function togglePasswordVisibility() {
+        var passwordInput = document.getElementById("password");
+        var eyeIcon = document.getElementById("eye-icon");
+
+        if (passwordInput.type === "password") {
+          passwordInput.type = "text";
+          eyeIcon.classList.remove("fa-eye");
+          eyeIcon.classList.add("fa-eye-slash");
+        } else {
+          passwordInput.type = "password";
+          eyeIcon.classList.remove("fa-eye-slash");
+          eyeIcon.classList.add("fa-eye");
+        }
+      }
+    </script>
+  </body>
+</html>

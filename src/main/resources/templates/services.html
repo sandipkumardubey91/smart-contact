@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  th:replace="~{base ::parent(~{:: #content}, ~{::title}, ~{::script})}"
+>
+  <head>
+    <meta charset="utf-8" />
+    <title>Services</title>
+  </head>
+  <body>
+    <div id="content" class="p-4">
+      <section class="pt-6 pb-12 max-md:mt-16">
+        <div class="max-w-6xl animate-fadeIn pt-10 mx-auto sm:px-6 lg:px-8">
+          <div class="text-center mb-10 mt-3">
+            <h2 class="text-4xl font-medium text-gray-900 dark:text-white">
+              Our Services
+            </h2>
+            <p class="mt-2 text-md text-gray-600 dark:text-gray-400">
+              We offer a range of features to make managing your contacts
+              seamless and secure.
+            </p>
+          </div>
+
+          <div class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            <!-- Contact Manager -->
+            <div
+              class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 min-h-[280px] flex flex-col justify-between shadow-md hover:shadow-lg transition"
+            >
+              <div>
+                <div class="flex items-center mb-4">
+                  <div class="p-2 bg-blue-600 text-white rounded-full">
+                    <svg
+                      class="h-6 w-6"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M5.121 17.804A4 4 0 018 15h8a4 4 0 012.879 6.804M15 11a4 4 0 10-6 0 4 4 0 006 0z"
+                      />
+                    </svg>
+                  </div>
+                  <h3
+                    class="ml-3 text-xl font-semibold text-gray-800 dark:text-white"
+                  >
+                    Contact Manager
+                  </h3>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                  Store all your contacts in one place with detailed information
+                  like phone numbers, emails, and addresses. Quickly search,
+                  edit, or delete entries in seconds using our intuitive
+                  interface.
+                </p>
+              </div>
+              <a
+                href="#"
+                class="mt-4 text-sm text-blue-600 hover:underline dark:text-blue-400"
+                >Learn More →</a
+              >
+            </div>
+
+            <!-- Cloud Sync -->
+            <div
+              class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 min-h-[280px] flex flex-col justify-between shadow-md hover:shadow-lg transition"
+            >
+              <div>
+                <div class="flex items-center mb-4">
+                  <div class="p-2 bg-green-600 text-white rounded-full">
+                    <svg
+                      class="h-6 w-6"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M3 15a4 4 0 004 4h13a4 4 0 000-8 5.5 5.5 0 00-10.9-.5A4.5 4.5 0 003 15z"
+                      />
+                    </svg>
+                  </div>
+                  <h3
+                    class="ml-3 text-xl font-semibold text-gray-800 dark:text-white"
+                  >
+                    Cloud Sync
+                  </h3>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                  Automatically sync your contacts across devices using our
+                  secure cloud system. Update a contact on your phone and access
+                  it instantly on your laptop, tablet, or any connected device.
+                </p>
+              </div>
+              <a
+                href="#"
+                class="mt-4 text-sm text-blue-600 hover:underline dark:text-blue-400"
+                >Learn More →</a
+              >
+            </div>
+
+            <!-- Smart Insights -->
+            <div
+              class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 min-h-[280px] flex flex-col justify-between shadow-md hover:shadow-lg transition"
+            >
+              <div>
+                <div class="flex items-center mb-4">
+                  <div class="p-2 bg-purple-600 text-white rounded-full">
+                    <svg
+                      class="h-6 w-6"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M11 11V3m4 14v-6m4 6v-2m-8 2v-4M5 21h14"
+                      />
+                    </svg>
+                  </div>
+                  <h3
+                    class="ml-3 text-xl font-semibold text-gray-800 dark:text-white"
+                  >
+                    Smart Insights
+                  </h3>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                  Get personalized suggestions on how to manage your contacts
+                  better. Our system analyzes usage trends and recommends
+                  groupings, follow-ups, or deduplication actions to keep your
+                  address book clean.
+                </p>
+              </div>
+              <a
+                href="#"
+                class="mt-4 text-sm text-blue-600 hover:underline dark:text-blue-400"
+                >Learn More →</a
+              >
+            </div>
+
+            <!-- Secure Backup -->
+            <div
+              class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 min-h-[280px] flex flex-col justify-between shadow-md hover:shadow-lg transition"
+            >
+              <div>
+                <div class="flex items-center mb-4">
+                  <div class="p-2 bg-red-600 text-white rounded-full">
+                    <svg
+                      class="h-6 w-6"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M4 4v16h16V4H4zm8 14v-4m0-4V6m-4 4h8"
+                      />
+                    </svg>
+                  </div>
+                  <h3
+                    class="ml-3 text-xl font-semibold text-gray-800 dark:text-white"
+                  >
+                    Secure Backup
+                  </h3>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                  Never worry about losing data. We use encrypted storage and
+                  automatic daily backups to protect your contacts. Restore
+                  previous versions at any time with one click.
+                </p>
+              </div>
+              <a
+                href="#"
+                class="mt-4 text-sm text-blue-600 hover:underline dark:text-blue-400"
+                >Learn More →</a
+              >
+            </div>
+
+            <!-- Import/Export -->
+            <div
+              class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 min-h-[280px] flex flex-col justify-between shadow-md hover:shadow-lg transition"
+            >
+              <div>
+                <div class="flex items-center mb-4">
+                  <div class="p-2 bg-yellow-500 text-white rounded-full">
+                    <svg
+                      class="h-6 w-6"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M12 8v8m0 0l-3-3m3 3l3-3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                      />
+                    </svg>
+                  </div>
+                  <h3
+                    class="ml-3 text-xl font-semibold text-gray-800 dark:text-white"
+                  >
+                    Import/Export
+                  </h3>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                  Easily migrate your contacts to or from other services using
+                  CSV or vCard files. Bulk import/export tools save you time and
+                  keep your data structured.
+                </p>
+              </div>
+              <a
+                href="#"
+                class="mt-4 text-sm text-blue-600 hover:underline dark:text-blue-400"
+                >Learn More →</a
+              >
+            </div>
+
+            <!-- Reminders -->
+            <div
+              class="bg-gray-50 dark:bg-gray-800 rounded-xl p-6 min-h-[280px] flex flex-col justify-between shadow-md hover:shadow-lg transition"
+            >
+              <div>
+                <div class="flex items-center mb-4">
+                  <div class="p-2 bg-indigo-600 text-white rounded-full">
+                    <svg
+                      class="h-6 w-6"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        stroke-width="2"
+                        d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6 6 0 00-5-5.917V4a1 1 0 10-2 0v1.083A6 6 0 006 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9"
+                      />
+                    </svg>
+                  </div>
+                  <h3
+                    class="ml-3 text-xl font-semibold text-gray-800 dark:text-white"
+                  >
+                    Reminders
+                  </h3>
+                </div>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                  Get timely reminders for birthdays, anniversaries, or
+                  meetings. Customize alerts and never forget important events
+                  with our built-in scheduler and notification system.
+                </p>
+              </div>
+              <a
+                href="#"
+                class="mt-4 text-sm text-blue-600 hover:underline dark:text-blue-400"
+                >Learn More →</a
+              >
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script>
+      console.log("Services page");
+    </script>
+  </body>
+</html>

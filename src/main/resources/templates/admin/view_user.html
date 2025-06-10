@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html
+  xmlns:th="http://www.thymeleaf.org"
+  th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>View User</title>
+  </head>
+
+  <body>
+    <div id="content">
+      <div class="sm:px-32 md:pt-28 max-md:pt-40">
+        <h2 class="text-2xl font-semibold max-md:pl-2 mb-4">User Details</h2>
+        <div
+          class="md:w-2/3 my-6 md:rounded-lg border-2 dark:border-gray-700 border-gray-300 text-sm text-left text-gray-700 dark:text-gray-300 shadow-2xl dark:bg-gray-800"
+        >
+          <table class="w-full">
+            <tbody>
+              <tr class="border-b-2 border-gray-400 dark:border-gray-600">
+                <th
+                  class="px-6 py-4 font-medium text-gray-900 dark:text-white md:rounded-tl-md bg-gray-300 dark:bg-gray-700"
+                >
+                  ID
+                </th>
+                <td
+                  class="hover:bg-gray-200 dark:hover:bg-gray-900 dark:bg-gray-800 px-6 bg-white md:rounded-tr-md py-4"
+                  th:text="${user.UserId}"
+                ></td>
+              </tr>
+              <tr
+                class="border-b-2 border-gray-400 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-900"
+              >
+                <th
+                  class="px-6 py-4 font-medium text-gray-900 dark:text-white bg-gray-300 dark:bg-gray-700"
+                >
+                  Name
+                </th>
+                <td
+                  class="hover:bg-gray-200 dark:hover:bg-gray-900 dark:bg-gray-800 px-6 py-4 bg-white"
+                  th:text="${user.name}"
+                ></td>
+              </tr>
+              <tr
+                class="border-b-2 border-gray-400 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-900"
+              >
+                <th
+                  class="px-6 py-4 font-medium text-gray-900 dark:text-white bg-gray-300 dark:bg-gray-700"
+                >
+                  Profile
+                </th>
+                <td
+                  class="hover:bg-gray-200 dark:hover:bg-gray-900 dark:bg-gray-800 px-6 py-4 bg-white"
+                >
+                  <img
+                    onerror="this.src='https://static-00.iconduck.com/assets.00/profile-default-icon-2048x2045-u3j7s5nj.png'"
+                    data-th-src="${user.profilePic}"
+                    class="h-16 w-16 rounded-full object-cover border border-gray-300 dark:border-gray-600"
+                    alt="Profile Picture"
+                  />
+                </td>
+              </tr>
+              <tr
+                class="border-b-2 border-gray-400 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-900"
+              >
+                <th
+                  class="px-6 py-4 font-medium text-gray-900 dark:text-white bg-gray-300 dark:bg-gray-700"
+                >
+                  Email
+                </th>
+                <td
+                  class="hover:bg-gray-200 dark:hover:bg-gray-900 dark:bg-gray-800 px-6 py-4 bg-white"
+                  th:text="${user.email}"
+                ></td>
+              </tr>
+              <tr
+                class="border-b-2 border-gray-400 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-900"
+              >
+                <th
+                  class="px-6 py-4 font-medium text-gray-900 dark:text-white bg-gray-300 dark:bg-gray-700"
+                >
+                  Phone
+                </th>
+                <td
+                  class="hover:bg-gray-200 dark:hover:bg-gray-900 dark:bg-gray-800 px-6 py-4 bg-white"
+                  th:text="${user.phoneNumber}"
+                ></td>
+              </tr>
+              <tr
+                class="border-b-2 border-gray-400 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-900"
+              >
+                <th
+                  class="px-6 py-4 font-medium text-gray-900 dark:text-white bg-gray-300 dark:bg-gray-700"
+                >
+                  About
+                </th>
+                <td
+                  class="hover:bg-gray-200 dark:hover:bg-gray-900 dark:bg-gray-800 px-6 py-4 bg-white"
+                  th:text="${user.about}"
+                ></td>
+              </tr>
+              <tr
+                class="border-b-2 border-gray-400 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-900"
+              >
+                <th
+                  class="px-6 py-4 font-medium text-gray-900 dark:text-white bg-gray-300 dark:bg-gray-700"
+                >
+                  Email Verified
+                </th>
+                <td
+                  class="hover:bg-gray-200 dark:hover:bg-gray-900 dark:bg-gray-800 px-6 py-4 bg-white"
+                  th:text="${user.emailVerified}"
+                ></td>
+              </tr>
+              <tr
+                class="border-b-2 border-gray-400 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-900"
+              >
+                <th
+                  class="px-6 py-4 font-medium text-gray-900 dark:text-white bg-gray-300 dark:bg-gray-700"
+                >
+                  Phone Verified
+                </th>
+                <td
+                  class="hover:bg-gray-200 dark:hover:bg-gray-900 dark:bg-gray-800 px-6 py-4 bg-white"
+                  th:text="${user.phoneVerified}"
+                ></td>
+              </tr>
+              <tr
+                class="border-b-2 border-gray-400 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-900"
+              >
+                <th
+                  class="px-6 py-4 font-medium text-gray-900 dark:text-white bg-gray-300 dark:bg-gray-700"
+                >
+                  Role
+                </th>
+                <td
+                  class="hover:bg-gray-200 dark:hover:bg-gray-900 dark:bg-gray-800 px-6 py-4 bg-white"
+                  th:text="${user.role}"
+                ></td>
+              </tr>
+              <tr
+                class="border-b-2 border-gray-400 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-900"
+              >
+                <th
+                  class="px-6 py-4 font-medium text-gray-900 dark:text-white bg-gray-300 dark:bg-gray-700"
+                >
+                  Number of Contacts
+                </th>
+                <td
+                  class="hover:bg-gray-200 dark:hover:bg-gray-900 dark:bg-gray-800 px-6 py-4 bg-white"
+                  th:text="${user.contacts.size()}"
+                ></td>
+              </tr>
+              <tr
+                class="border-b-2 border-gray-400 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-900"
+              >
+                <th
+                  class="px-6 py-4 font-medium text-gray-900 dark:text-white bg-gray-300 dark:bg-gray-700"
+                >
+                  Facebook Link
+                </th>
+                <td
+                  class="hover:bg-gray-200 dark:hover:bg-gray-900 dark:bg-gray-800 px-6 py-4 text-blue-600 dark:text-blue-400 bg-white"
+                >
+                  <a th:href="${user.facebookLink}" target="_blank">Click</a>
+                </td>
+              </tr>
+              <tr
+                class="border-b-2 border-gray-400 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-900"
+              >
+                <th
+                  class="px-6 py-4 font-medium text-gray-900 dark:text-white bg-gray-300 dark:bg-gray-700"
+                >
+                  LinkedIn Link
+                </th>
+                <td
+                  class="hover:bg-gray-200 dark:hover:bg-gray-900 dark:bg-gray-800 px-6 py-4 text-blue-600 dark:text-blue-400 bg-white"
+                >
+                  <a th:href="${user.linkedinLink}" target="_blank">Click</a>
+                </td>
+              </tr>
+              <tr
+                class="border-b-2 border-gray-400 dark:border-gray-600 hover:bg-gray-200 dark:hover:bg-gray-900"
+              >
+                <th
+                  class="px-6 py-4 font-medium text-gray-900 dark:text-white bg-gray-300 dark:bg-gray-700"
+                >
+                  Github Link
+                </th>
+                <td
+                  class="hover:bg-gray-200 dark:hover:bg-gray-900 dark:bg-gray-800 px-6 py-4 text-blue-600 dark:text-blue-400 bg-white"
+                >
+                  <a th:href="${user.githubLink}" target="_blank">Click</a>
+                </td>
+              </tr>
+              <tr
+                class="hover:bg-gray-200 dark:hover:bg-gray-900 dark:bg-gray-800"
+              >
+                <th
+                  class="px-6 py-4 font-medium md:rounded-bl-md text-gray-900 dark:text-white bg-gray-300 dark:bg-gray-700"
+                >
+                  Twitter Link
+                </th>
+                <td
+                  class="hover:bg-gray-200 md:rounded-br-md dark:bg-gray-800 dark:hover:bg-gray-900 px-6 py-4 text-blue-600 dark:text-blue-400 bg-white"
+                >
+                  <a th:href="${user.twitterLink}" target="_blank">Click</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <script></script>
+  </body>
+</html>

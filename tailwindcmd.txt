@@ -1,0 +1,8 @@
+npx tailwindcss -i ./src/main/resources/static/css/input.css -o ./src/main/resources/static/css/output.css --watch
+https://chatgpt.com/share/6811fe79-b6cc-8002-963a-78231c9e497e
+
+✍️
+
+profile button class
+
+class="relative text-white font-bold bg-gray-800 hover:bg-gray-900 focus:ring-2 focus:outline-none focus:ring-blue-300 rounded-full text-sm md:px-4 md:py-3 text-center dark:bg-gray-100 dark:text-gray-900 dark:hover:bg-gray-900 dark:hover:text-white transition-colors duration-300 ease-linear"

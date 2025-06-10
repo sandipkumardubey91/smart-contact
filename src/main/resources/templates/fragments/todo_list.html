@@ -1,0 +1,23 @@
+<div th:fragment="todo-list">
+  <ul class="space-y-2" id="todo-list">
+    <li
+      th:each="t : ${todos}"
+      class="text-sm bg-gray-100 dark:bg-gray-700 p-2 rounded flex justify-between items-center"
+    >
+      <span>
+        📌 <span th:text="${t.task}">Task</span>
+        <small
+          class="text-gray-400 ml-2"
+          th:text="${#temporals.format(t.createdAt, 'MMM d, HH:mm')}"
+        ></small>
+      </span>
+      <form
+        th:action="@{'/user/dashboard/delete/' + ${t.id}}"
+        method="post"
+        style="display: inline"
+      >
+        <button type="submit" class="text-red-500 hover:text-red-700">✕</button>
+      </form>
+    </li>
+  </ul>
+</div>

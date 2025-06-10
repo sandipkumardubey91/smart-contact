@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}"
+>
+  <head>
+    <title th:text="${loggedInUser.name} + ' | SCM'">Messages</title>
+  </head>
+  <body>
+    <div id="content">
+      <!-- Sidebar -->
+      <!-- <div th:if="${loggedInUser}">
+        <div th:replace="~{user/sidebar :: sidebar}"></div>
+      </div> -->
+
+      <div class="sm:pl-64 pt-20">
+        <div class="p-4">
+          <h1 class="text-5xl text-center">All Your Contacts</h1>
+
+          <div
+            class="animate-fadeIn contacts_container mt-10 pb-2 pt-8 bg-white dark:bg-gray-800"
+          >
+            <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+              <!-- Contacts Table -->
+              <table
+                th:if="${pageContact.totalElements > 0}"
+                class="w-full text-sm text-left text-gray-500 dark:text-gray-400"
+              >
+                <thead
+                  class="text-xs uppercase bg-gray-100 dark:bg-gray-700 dark:text-gray-400"
+                >
+                  <tr>
+                    <th class="px-6 py-3">Name</th>
+                    <th class="px-6 py-3">Email</th>
+                    <th class="px-6 py-3">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr
+                    th:each="c : ${pageContact.content}"
+                    class="hover:bg-gray-100 dark:hover:bg-gray-600 border-b dark:border-gray-700"
+                  >
+                    <td class="flex items-center px-6 py-4">
+                      <img
+                        onerror="this.src='https://static-00.iconduck.com/assets.00/profile-default-icon-2048x2045-u3j7s5nj.png'"
+                        class="w-10 h-10 rounded-full"
+                        th:src="@{${c.picture}}"
+                      />
+                      <div class="ps-3">
+                        <div class="font-semibold" th:text="${c.name}">
+                          Name
+                        </div>
+                      </div>
+                    </td>
+                    <td class="px-6 py-4" th:text="${c.email}">
+                      email@example.com
+                    </td>
+                    <td class="px-6 py-4 space-x-2">
+                      <!-- Mail Button -->
+                      <a
+                        th:href="@{/user/message/mail/{id}(id=${c.id})}"
+                        class="inline-block px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600"
+                        title="Send Mail"
+                        >✉️</a
+                      >
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <!-- Pagination Controls -->
+              <div
+                data-th-if="${pageContact.totalElements > 0}"
+                class="pagination_container bg-white dark:bg-gray-800 p-5 text-center"
+              >
+                <nav aria-label="Page navigation">
+                  <ul
+                    class="inline-flex -space-x-px text-base h-10"
+                    data-th-with="
+        totalPages=${pageContact.totalPages},
+        currentPage=${pageContact.number},
+        startPage=${totalPages <= 3 ? 1 : T(java.lang.Math).max(1, currentPage - 1)},
+        endPage=${totalPages <= 3 ? totalPages - 2 : T(java.lang.Math).min(totalPages - 2, currentPage + 1)}"
+                  >
+                    <!-- Previous Button -->
+                    <li data-th-if="${totalPages > 1 and !pageContact.first}">
+                      <a
+                        data-th-href="@{'/user/contacts?size='+${pageSize}+'&page=' + ${currentPage - 1}}"
+                        href="#"
+                        class="flex items-center justify-center px-4 h-10 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                        >Previous</a
+                      >
+                    </li>
+
+                    <!-- First Page -->
+                    <li>
+                      <a
+                        data-th-href="@{'/user/contacts?size='+${pageSize}+'&page=0'}"
+                        href="#"
+                        data-th-classappend="${currentPage == 0 ? 'bg-blue-50 dark:bg-gray-600' : 'bg-white dark:bg-gray-800'}"
+                        class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                        >1</a
+                      >
+                    </li>
+
+                    <!-- Ellipsis before middle pages -->
+                    <li data-th-if="${totalPages > 3 and startPage > 1}">
+                      <span
+                        class="flex items-center justify-center px-4 h-10 text-gray-400"
+                        >...</span
+                      >
+                    </li>
+
+                    <!-- Dynamic Middle Pages -->
+                    <li
+                      data-th-if="${totalPages > 2}"
+                      data-th-each="index : ${#numbers.sequence(startPage, endPage)}"
+                    >
+                      <a
+                        data-th-href="@{'/user/contacts?size='+${pageSize}+'&page=' + ${index}}"
+                        href="#"
+                        data-th-classappend="${index == currentPage ? 'bg-blue-50 dark:bg-gray-600' : 'bg-white dark:bg-gray-800'}"
+                        class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                      >
+                        <span data-th-text="${index + 1}"></span>
+                      </a>
+                    </li>
+
+                    <!-- Ellipsis after middle pages -->
+                    <li
+                      data-th-if="${totalPages > 3 and endPage < totalPages - 2}"
+                    >
+                      <span
+                        class="flex items-center justify-center px-4 h-10 text-gray-400"
+                        >...</span
+                      >
+                    </li>
+
+                    <!-- Last Page -->
+                    <li data-th-if="${totalPages > 1}">
+                      <a
+                        data-th-href="@{'/user/contacts?size='+${pageSize}+'&page=' + ${totalPages - 1}}"
+                        href="#"
+                        data-th-classappend="${currentPage == totalPages - 1 ? 'bg-blue-50 dark:bg-gray-600' : 'bg-white dark:bg-gray-800'}"
+                        class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 border border-gray-300 hover:bg-gray-100 hover:text-gray-700 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                      >
+                        <span data-th-text="${totalPages}"></span>
+                      </a>
+                    </li>
+
+                    <!-- Next Button -->
+                    <li data-th-if="${totalPages > 1 and !pageContact.last}">
+                      <a
+                        data-th-href="@{'/user/contacts?size='+${pageSize}+'&page=' + ${currentPage + 1}}"
+                        href="#"
+                        class="flex items-center justify-center px-4 h-10 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white"
+                        >Next</a
+                      >
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+
+              <h1
+                class="text-5xl text-center p-4"
+                th:if="${pageContact.totalElements == 0}"
+              >
+                No results found
+              </h1>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Modals (if any) -->
+        <div th:replace="~{user/contact_modals :: contact}"></div>
+      </div>
+    </div>
+
+    <script>
+      console.log("Messages page loaded");
+    </script>
+  </body>
+</html>

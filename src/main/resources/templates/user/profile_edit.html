@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  th:replace="~{base :: parent(~{::#content},~{::title},~{::script})}"
+>
+  <head>
+    <title data-th-text="${loggedInUser.name}+' |  SCM'">Edit Profile</title>
+  </head>
+  <body>
+    <div id="content">
+      <!-- side bar  -->
+
+      <!-- <div th:if="${loggedInUser}">
+        <div data-th-replace="~{user/sidebar::sidebar}"></div>
+      </div> -->
+
+      <div class="sm:px-32 animate-fadeIn md:pt-24 max-md:pt-32">
+        <div class="grid grid-cols-12">
+          <div class="col-span-3"></div>
+          <div class="col-span-12 md:col-span-6">
+            <div
+              class="flex flex-col space-y-10 my-10 w-full max-w-xl mx-auto bg-white dark:bg-gray-800 md:rounded-3xl shadow-2xl md:px-10 md:py-10 max-md:px-4 max-md:py-10 border border-purple-200 dark:border-gray-700"
+            >
+              <div data-th-replace="message::messagebox"></div>
+
+              <h1 class="text-2xl font-semibold">Edit Your Profile</h1>
+
+              <form
+                action=""
+                class="mt-10"
+                data-th-action="@{'/user/edit'}"
+                data-th-object="${userForm}"
+                method="post"
+                enctype="multipart/form-data"
+              >
+                <!-- name form -->
+                <div class="mb-5">
+                  <label
+                    for="input-group-1"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >Your Name</label
+                  >
+                  <div class="relative mb-1">
+                    <div
+                      class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none"
+                    >
+                      <i class="fa-regular w-4 h-4 fa-user"></i>
+                    </div>
+                    <input
+                      data-th-field="*{name}"
+                      type="text"
+                      class="bg-gray-100 border border-gray-300 hover:border-gray-600 dark:hover:border-gray-100 text-gray-900 text-sm rounded-md w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white block ps-10 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Not Available"
+                    />
+                  </div>
+                  <p
+                    class="text-red-500"
+                    data-th-if="${#fields.hasErrors('name')}"
+                    data-th-errors="*{name}"
+                  >
+                    Invalid Name
+                  </p>
+                </div>
+
+                <!-- phone number  -->
+                <div class="mb-5">
+                  <label
+                    for="input-group-1"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >Your Phone</label
+                  >
+                  <div class="relative mb-1">
+                    <div
+                      class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none"
+                    >
+                      <i class="fa-solid w-4 h-4 fa-phone"></i>
+                    </div>
+                    <input
+                      data-th-field="*{phoneNumber}"
+                      type="text"
+                      class="bg-gray-100 border border-gray-300 hover:border-gray-600 dark:hover:border-gray-100 text-gray-900 text-sm rounded-md w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white block ps-10 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Not Available"
+                    />
+                  </div>
+                  <p
+                    class="text-red-500"
+                    data-th-if="${#fields.hasErrors('phoneNumber')}"
+                    data-th-errors="*{phoneNumber}"
+                  >
+                    Invalid Name
+                  </p>
+                </div>
+
+                <!-- description -->
+
+                <div class="mb-5">
+                  <label
+                    for="message"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >About</label
+                  >
+                  <textarea
+                    data-th-field="*{about}"
+                    rows="4"
+                    class="hover:border-gray-600 dark:hover:border-gray-100 t block p-2.5 w-full text-sm text-gray-900 bg-gray-100 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="Not Available"
+                  ></textarea>
+                </div>
+
+                <!--  Facebook  -->
+
+                <div class="mb-5">
+                  <label
+                    for="input-group-1"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >Facebook</label
+                  >
+                  <div class="relative mb-1">
+                    <div
+                      class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none"
+                    >
+                      <i class="fa-brands fa-square-facebook w-4 h-4"></i>
+                    </div>
+                    <input
+                      data-th-field="*{facebookLink}"
+                      type="text"
+                      class="bg-gray-100 border border-gray-300 hover:border-gray-600 dark:hover:border-gray-100 text-gray-900 text-sm rounded-md w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white block ps-10 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Not Available"
+                    />
+                  </div>
+                  <p
+                    class="text-red-500"
+                    data-th-if="${#fields.hasErrors('name')}"
+                    data-th-errors="*{name}"
+                  >
+                    Invalid Name
+                  </p>
+                </div>
+
+                <!--  LinkedIn  -->
+
+                <div class="mb-5">
+                  <label
+                    for="input-group-1"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >LinkedIn</label
+                  >
+                  <div class="relative mb-1">
+                    <div
+                      class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none"
+                    >
+                      <i class="fa-brands w-4 h-4 fa-linkedin"></i>
+                    </div>
+                    <input
+                      data-th-field="*{linkedinLink}"
+                      type="text"
+                      class="bg-gray-100 border border-gray-300 hover:border-gray-600 dark:hover:border-gray-100 text-gray-900 text-sm rounded-md w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white block ps-10 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Not Available"
+                    />
+                  </div>
+                  <p
+                    class="text-red-500"
+                    data-th-if="${#fields.hasErrors('name')}"
+                    data-th-errors="*{name}"
+                  >
+                    Invalid Name
+                  </p>
+                </div>
+
+                <!--  Github  -->
+
+                <div class="mb-5">
+                  <label
+                    for="input-group-1"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >Github</label
+                  >
+                  <div class="relative mb-1">
+                    <div
+                      class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none"
+                    >
+                      <i class="fa-brands w-4 h-4 fa-github"></i>
+                    </div>
+                    <input
+                      data-th-field="*{githubLink}"
+                      type="text"
+                      class="bg-gray-100 border border-gray-300 hover:border-gray-600 dark:hover:border-gray-100 text-gray-900 text-sm rounded-md w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white block ps-10 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Not Available"
+                    />
+                  </div>
+                  <p
+                    class="text-red-500"
+                    data-th-if="${#fields.hasErrors('name')}"
+                    data-th-errors="*{name}"
+                  >
+                    Invalid Name
+                  </p>
+                </div>
+
+                <!--  Twitter -->
+                <div class="mb-5">
+                  <label
+                    for="input-group-1"
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    >Twitter</label
+                  >
+                  <div class="relative mb-1">
+                    <div
+                      class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none"
+                    >
+                      <i class="fa-brands w-4 h-4 fa-twitter"></i>
+                    </div>
+                    <input
+                      data-th-field="*{twitterLink}"
+                      type="text"
+                      class="bg-gray-100 border border-gray-300 hover:border-gray-600 dark:hover:border-gray-100 text-gray-900 text-sm rounded-md w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white block ps-10 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Not Available"
+                    />
+                  </div>
+                  <p
+                    class="text-red-500"
+                    data-th-if="${#fields.hasErrors('name')}"
+                    data-th-errors="*{name}"
+                  >
+                    Invalid Name
+                  </p>
+                </div>
+
+                <!--  profile image -->
+                <div class="mb-3">
+                  <label
+                    class="block mb-2 text-sm font-medium text-gray-900 bg-gray dark:text-white"
+                    for="large_size"
+                    >Profile Image</label
+                  >
+                  <input
+                    id="image_file_input"
+                    class="block w-full mb-2 text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400"
+                    data-th-field="*{userImage}"
+                    type="file"
+                  />
+
+                  <img
+                    class="max-h-52 mx-auto border-2 border-gray-200 dark:border-gray-900 rounded-full shadow-gray-400 dark:shadow-gray-900 dark:shadow-2xl shadow-2xl m-3 mt-6"
+                    data-th-src="*{picture}"
+                    id="upload_image_preview"
+                    alt=""
+                  />
+                </div>
+
+                <div class="button-container mt-12 text-center">
+                  <button
+                    type="submit"
+                    class="relative text-white bg-gray-800 hover:bg-gray-900 focus:ring-2 focus:outline-none focus:ring-blue-300 rounded-full px-7 py-2.5 dark:font-medium font-normal text-center dark:bg-blue-700 dark:hover:bg-blue-800 dark:hover:text-white transition-colors duration-300 ease-linear"
+                  >
+                    Update
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script data-th-src="@{'/js/admin.js'}"></script>
+    <script>
+      console.log("this is profile page");
+    </script>
+  </body>
+</html>

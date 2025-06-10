@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html
+  lang="en"
+  th:replace="~{base :: parent(~{::#content}, ~{::title}, ~{::script})}"
+>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Contact Manager Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
+
+  <body>
+    <div id="content">
+      <!-- Sidebar -->
+      <!-- <div th:if="${loggedInUser}">
+        <div th:replace="~{user/sidebar :: sidebar}"></div>
+      </div> -->
+
+      <div class="sm:px-32 md:pt-24 max-md:pt-32">
+        <div class="p-4">
+          <header class="mb-6">
+            <h1 class="text-4xl mb-3 font-bold">
+              Welcome to Smart Contact Manager
+            </h1>
+            <p class="text-sm mb-8 text-gray-500 dark:text-gray-400">
+              Your personal contact dashboard at a glance.
+            </p>
+          </header>
+
+          <!-- Summary Cards -->
+          <section
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6"
+          >
+            <div
+              class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md text-center hover:shadow-lg"
+            >
+              <p class="text-gray-500 dark:text-gray-300">Total Contacts</p>
+              <p
+                class="text-3xl font-bold text-purple-600"
+                th:text="${totalContacts}"
+              >
+                152
+              </p>
+            </div>
+            <div
+              class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md text-center hover:shadow-lg"
+            >
+              <p class="text-gray-500 dark:text-gray-300">Favourite Contacts</p>
+              <p
+                class="text-3xl font-bold text-yellow-500"
+                th:text="${favouriteContacts}"
+              >
+                37
+              </p>
+            </div>
+            <div
+              class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md text-center hover:shadow-lg"
+            >
+              <p class="text-gray-500 dark:text-gray-300">Upcoming Reminders</p>
+              <p
+                class="text-3xl font-bold text-red-500"
+                id="upcoming-reminders-count"
+                data-th-text="${upcomingReminders}"
+              >
+                5
+              </p>
+            </div>
+            <div
+              class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md text-center hover:shadow-lg"
+            >
+              <p class="text-gray-500 dark:text-gray-300">Last Updated</p>
+              <p
+                class="text-lg font-semibold"
+                th:text="${#temporals.format(lastUpdated, 'MMM d, HH:mm')}"
+              >
+                May 8, 2025
+              </p>
+            </div>
+          </section>
+
+          <!-- Chart + Todo -->
+          <section class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+            <div
+              class="col-span-1 lg:col-span-2 bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md"
+            >
+              <h2 class="text-xl text-center font-semibold mb-4">
+                Favorite vs Total Contacts
+              </h2>
+              <div class="w-64 mx-auto">
+                <canvas id="favChart" height="200" width="200"></canvas>
+              </div>
+            </div>
+            <div class="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
+              <h2 class="text-xl font-semibold mb-4">Your Todo List</h2>
+
+              <!-- Form to add new todo -->
+              <form
+                id="todo-form"
+                th:object="${todo}"
+                th:action="@{'/user/dashboard/add'}"
+                method="post"
+                class="flex mb-4"
+              >
+                <input
+                  id="todo-input"
+                  type="text"
+                  name="task"
+                  placeholder="Add new task"
+                  class="w-full p-2 border border-gray-300 dark:border-gray-600 rounded-l bg-white dark:bg-gray-700 text-black dark:text-white"
+                  required
+                />
+                <button
+                  type="submit"
+                  class="bg-blue-600 text-white px-4 rounded-r hover:bg-blue-700"
+                >
+                  Add
+                </button>
+              </form>
+
+              <!-- Display all todos -->
+              <div>
+                <ul id="todo-list" class="space-y-2">
+                  <li
+                    id="todo-item"
+                    th:each="t : ${todos}"
+                    class="text-sm bg-gray-100 dark:bg-gray-700 p-2 rounded flex justify-between items-center"
+                  >
+                    <span
+                      >📌
+                      <span th:text="${t.task}">qwerty</span>
+                      <small
+                        class="text-gray-400 ml-2"
+                        th:text="${#temporals.format(t.createdAt, 'MMM d, HH:mm')}"
+                        >qwerty</small
+                      ></span
+                    >
+
+                    <form
+                      th:action="@{'/user/dashboard/delete/' + ${t.id}}"
+                      method="delete"
+                      style="display: inline"
+                    >
+                      <button
+                        type="submit"
+                        class="text-red-500 hover:text-red-700"
+                      >
+                        ✕
+                      </button>
+                    </form>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </section>
+
+          <section
+            class="mt-16 p-6 shadow-xl border-2 border-gray-200 dark:border-gray-900 rounded-md bg-white dark:bg-gray-800"
+          >
+            <h2 class="text-2xl font-semibold mb-4">Recent Contacts</h2>
+            <div
+              class="flex overflow-x-auto space-x-6 p-4 items-center justify-start"
+            >
+              <div th:each="contact : ${recentContacts}">
+                <div
+                  th:onClick="loadContactdata([[${contact.id}]])"
+                  style="box-shadow: 0 0 5px rgb(55, 55, 55)"
+                  class="min-w-[150px] bg-gray-200 dark:bg-gray-700 border-2 border-gray-300 p-4 rounded-xl dark:border-gray-800 flex flex-col items-center text-center hover:scale-105 duration-300"
+                >
+                  <img
+                    th:src="${contact.picture}"
+                    onerror="this.src='https://static-00.iconduck.com/assets.00/profile-default-icon-2048x2045-u3j7s5nj.png'"
+                    class="w-24 h-24 rounded-full object-cover mb-3"
+                    alt="Contact Image"
+                  />
+
+                  <p
+                    class="text-lg font-semibold text-gray-800 dark:text-white"
+                    th:text="${#strings.listSplit(contact.name, ' ').get(0)}"
+                  >
+                    Name
+                  </p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+      <div data-th-replace="~{ user/contact_modals :: contact}"></div>
+    </div>
+
+    <!-- Chart Script -->
+    <script th:inline="javascript">
+      /*<![CDATA[*/
+      const favContacts = /*[[${favouriteContacts}]]*/ 0;
+      const totalContacts = /*[[${totalContacts}]]*/ 0;
+      /*]]>*/
+
+      const ctx = document.getElementById("favChart");
+      new Chart(ctx, {
+        type: "doughnut",
+        data: {
+          labels: ["Favourites", "Others"],
+          datasets: [
+            {
+              data: [favContacts, totalContacts - favContacts],
+              backgroundColor: ["#facc15", "#a78bfa"],
+              borderWidth: 1,
+              align: "center",
+            },
+          ],
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            legend: {
+              position: "bottom",
+              labels: {
+                padding: 20,
+                margin: 20,
+              },
+            },
+          },
+        },
+      });
+    </script>
+
+    <script data-th-src="@{'/js/contacts.js'}"></script>
+    <script data-th-src="@{'/js/todo.js'}"></script>
+  </body>
+</html>
